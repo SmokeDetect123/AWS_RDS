@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        form { display: inline-block; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        input { display: block; margin: 10px auto; padding: 8px; width: 200px; border: 1px solid #333; border-radius: 5px; }
+        button { padding: 8px 15px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px; }
+        button:hover { background-color: #45a049; }
+        #message { margin-top: 15px; color: #d9534f; }
+    </style>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Enter Username" required>
+        <input type="password" id="password" placeholder="Enter Password" required>
+        <button type="submit">Login</button>
+    </form>
+    <p id="message"></p>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+
+            let response = await fetch('http://127.0.0.1:5000/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            let result = await response.json();
+            document.getElementById('message').innerText = result.message;
+        });
+    </script>
+</body>
+</html>
